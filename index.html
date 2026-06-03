@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Toolsdown — Site coordination that runs on WhatsApp</title>
+<meta name="description" content="Toolsdown turns the WhatsApp messages your crew already sends into structured materials orders the office can act on. No new app for builders to learn.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --concrete:#14161a;
+    --concrete-2:#1c1f26;
+    --steel:#2a2e38;
+    --paper:#f2efe9;
+    --muted:#9aa1ad;
+    --hivis:#ff5c1a;
+    --hivis-soft:#ffb38a;
+    --line:rgba(242,239,233,.12);
+    --display:"Bricolage Grotesque",sans-serif;
+    --body:"IBM Plex Sans",sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--concrete);
+    color:var(--paper);
+    font-family:var(--body);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  body::before{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:1;opacity:.04;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  .wrap{max-width:1080px;margin:0 auto;padding:0 28px;position:relative;z-index:2}
+
+  /* header */
+  header{padding:30px 0;display:flex;align-items:center;justify-content:space-between}
+  .brand{display:flex;align-items:center;gap:12px;font-family:var(--display);font-weight:800;letter-spacing:-.02em;font-size:22px}
+  .brand .dot{width:14px;height:14px;background:var(--hivis);border-radius:2px;transform:rotate(45deg)}
+  .nav-mail{color:var(--muted);text-decoration:none;font-size:14px;font-weight:500;border-bottom:1px solid transparent;transition:.2s}
+  .nav-mail:hover{color:var(--paper);border-color:var(--hivis)}
+
+  /* hero */
+  .hero{padding:80px 0 70px;position:relative}
+  .eyebrow{display:inline-flex;align-items:center;gap:9px;font-size:12.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--hivis-soft);margin-bottom:30px}
+  .eyebrow::before{content:"";width:26px;height:1px;background:var(--hivis)}
+  h1{
+    font-family:var(--display);font-weight:800;letter-spacing:-.03em;line-height:.98;
+    font-size:clamp(42px,7.2vw,82px);max-width:13ch;
+  }
+  h1 em{font-style:normal;color:var(--hivis)}
+  .lede{margin-top:28px;font-size:clamp(17px,2.1vw,21px);color:var(--muted);max-width:46ch;font-weight:400}
+  .cta{margin-top:42px;display:flex;gap:16px;flex-wrap:wrap;align-items:center}
+  .btn{
+    font-family:var(--body);font-weight:600;font-size:15px;text-decoration:none;
+    padding:15px 26px;border-radius:3px;transition:.18s;display:inline-block;
+  }
+  .btn-primary{background:var(--hivis);color:#1a0a00}
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(255,92,26,.3)}
+  .btn-ghost{color:var(--paper);border:1px solid var(--line)}
+  .btn-ghost:hover{border-color:var(--hivis-soft)}
+
+  /* flow strip */
+  .flow{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:54px 0;margin-top:30px}
+  .flow-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:26px}
+  .step .num{font-family:var(--display);font-weight:700;color:var(--steel);font-size:34px;line-height:1}
+  .step h3{font-family:var(--display);font-weight:700;font-size:17px;margin:14px 0 7px;letter-spacing:-.01em}
+  .step p{font-size:14px;color:var(--muted)}
+
+  /* what */
+  .section{padding:78px 0}
+  .section h2{font-family:var(--display);font-weight:800;letter-spacing:-.02em;font-size:clamp(28px,4vw,40px);max-width:18ch;line-height:1.05}
+  .section .sub{color:var(--muted);margin-top:18px;max-width:54ch;font-size:17px}
+  .cards{margin-top:48px;display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
+  .card{background:var(--concrete);padding:34px 28px}
+  .card .tag{font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--hivis)}
+  .card h4{font-family:var(--display);font-weight:700;font-size:19px;margin:16px 0 9px}
+  .card p{font-size:14.5px;color:var(--muted)}
+
+  /* contact */
+  .contact{background:var(--concrete-2);border:1px solid var(--line);border-radius:6px;padding:54px 48px;margin:30px 0 80px;position:relative;overflow:hidden}
+  .contact::after{content:"";position:absolute;right:-60px;top:-60px;width:220px;height:220px;background:radial-gradient(circle,rgba(255,92,26,.16),transparent 70%)}
+  .contact h2{font-family:var(--display);font-weight:800;font-size:clamp(26px,3.5vw,36px);letter-spacing:-.02em}
+  .contact p{color:var(--muted);margin-top:14px;font-size:17px}
+  .contact a.mail{display:inline-block;margin-top:26px;font-family:var(--display);font-weight:700;font-size:clamp(20px,3vw,28px);color:var(--paper);text-decoration:none;border-bottom:2px solid var(--hivis);padding-bottom:3px;transition:.2s}
+  .contact a.mail:hover{color:var(--hivis)}
+
+  /* footer */
+  footer{border-top:1px solid var(--line);padding:40px 0 60px}
+  .foot-grid{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;align-items:center}
+  .foot-grid p{font-size:13.5px;color:var(--muted)}
+  .foot-grid a{color:var(--muted);text-decoration:none;border-bottom:1px solid transparent;transition:.2s}
+  .foot-grid a:hover{color:var(--paper);border-color:var(--hivis)}
+  .entity{font-size:13px;color:var(--steel);margin-top:8px}
+
+  /* load animation */
+  .reveal{opacity:0;transform:translateY(18px);animation:rise .7s cubic-bezier(.2,.7,.2,1) forwards}
+  .reveal:nth-child(1){animation-delay:.05s}
+  @keyframes rise{to{opacity:1;transform:none}}
+
+  @media(max-width:760px){
+    .flow-grid{grid-template-columns:repeat(2,1fr);gap:32px 20px}
+    .cards{grid-template-columns:1fr}
+    .contact{padding:38px 26px}
+    .hero{padding:54px 0 50px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="brand"><span class="dot"></span>Toolsdown</div>
+    <a class="nav-mail" href="mailto:joe@toolsdown.online">joe@toolsdown.online</a>
+  </header>
+
+  <section class="hero">
+    <div class="eyebrow reveal">UK site coordination · built on WhatsApp</div>
+    <h1 class="reveal">Your crew already texts. <em>Toolsdown</em> turns it into orders.</h1>
+    <p class="lede reveal">Toolsdown captures the photos and voice notes builders send on WhatsApp and turns them into structured materials orders the office can act on. No new app for the crew to download or learn.</p>
+    <div class="cta reveal">
+      <a class="btn btn-primary" href="mailto:joe@toolsdown.online">Request a demo</a>
+      <a class="btn btn-ghost" href="#how">See how it works</a>
+    </div>
+  </section>
+
+  <section class="flow" id="how">
+    <div class="flow-grid">
+      <div class="step">
+        <div class="num">01</div>
+        <h3>Crew sends</h3>
+        <p>Builders send photos and voice notes to a WhatsApp number, the same way they already message the office.</p>
+      </div>
+      <div class="step">
+        <div class="num">02</div>
+        <h3>We extract</h3>
+        <p>Toolsdown reads the message and pulls out a clean, itemised list of materials, quantities and dates.</p>
+      </div>
+      <div class="step">
+        <div class="num">03</div>
+        <h3>Office approves</h3>
+        <p>The order lands on a dashboard for the office to check and sign off before anything is placed.</p>
+      </div>
+      <div class="step">
+        <div class="num">04</div>
+        <h3>Nothing lost</h3>
+        <p>Every request, photo and approval is logged in one place instead of buried in a group chat.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>The pain we fix sits between the site and the office.</h2>
+    <p class="sub">Materials get asked for in a voice note, half-actioned, then turn up late or wrong. Toolsdown closes that gap without changing how the crew works.</p>
+    <div class="cards">
+      <div class="card">
+        <div class="tag">Materials</div>
+        <h4>From chat to order</h4>
+        <p>Voice notes and photos become structured, itemised orders the office can act on the same day.</p>
+      </div>
+      <div class="card">
+        <div class="tag">No friction</div>
+        <h4>Stays on WhatsApp</h4>
+        <p>Builders use the app they already have. No downloads, no training, no resistance on site.</p>
+      </div>
+      <div class="card">
+        <div class="tag">Control</div>
+        <h4>Office signs off</h4>
+        <p>Requests are reviewed and approved before they are placed, so spend stays under control.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact" id="contact">
+    <h2>Want to see it on a real job?</h2>
+    <p>Toolsdown is working with a small number of UK contractors. Get in touch to arrange a demo.</p>
+    <a class="mail" href="mailto:joe@toolsdown.online">joe@toolsdown.online</a>
+  </section>
+
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <p>© 2026 Toolsdown</p>
+        <p class="entity">Toolsdown is a product operated by Lynx Real Estate Ltd, registered in England &amp; Wales.</p>
+      </div>
+      <p><a href="/privacy.html">Privacy Policy</a> &nbsp;·&nbsp; <a href="mailto:joe@toolsdown.online">Contact</a></p>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
