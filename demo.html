@@ -27,7 +27,9 @@
   .dp-av-b { background: #3a6ea5; }
   .dp-nm { font-size: 13px; font-weight: 500; color: #E9EDEF; }
   .dp-st { font-size: 9px; color: #8696A0; }
-  .dp-msgs { padding: 14px 10px; display: flex; flex-direction: column; gap: 7px; min-height: 380px; max-height: 480px; overflow-y: auto; }
+  .dp-msgs { padding: 14px 10px; display: flex; flex-direction: column; gap: 7px; min-height: 380px; }
+  #bm { min-height: 720px; }
+  #mm { min-height: 560px; }
   .dp-m { max-width: 90%; padding: 7px 10px; border-radius: 8px; font-size: 12.5px; line-height: 1.5; color: #E9EDEF; white-space: pre-wrap; }
   .dp-in { background: #1F2C34; align-self: flex-start; border-radius: 0 8px 8px 8px; }
   .dp-out { background: #005C4B; align-self: flex-end; border-radius: 8px 0 8px 8px; }
@@ -81,10 +83,10 @@
 </div>
 
 <script>
-function bAdd(t,type,d){ setTimeout(()=>{ const m=document.getElementById('bm'); const x=document.createElement('div'); x.className='dp-m '+(type==='out'?'dp-out':'dp-in'); x.innerHTML=t+'<div class="dp-t">17:02'+(type==='out'?' ✓✓':'')+'</div>'; m.appendChild(x); m.scrollTop=m.scrollHeight; },d); }
-function bPhoto(cls,d){ setTimeout(()=>{ const m=document.getElementById('bm'); const p=document.createElement('div'); p.className='dp-photo '+cls; p.innerHTML='<span>17:02 ✓✓</span>'; m.appendChild(p); m.scrollTop=m.scrollHeight; },d); }
-function mAdd(t,d){ setTimeout(()=>{ const m=document.getElementById('mm'); if(m.querySelector('.dp-mgr-empty')) m.innerHTML=''; const x=document.createElement('div'); x.className='dp-m dp-in'; x.style.maxWidth='95%'; x.innerHTML=t+'<div class="dp-t">17:04</div>'; m.appendChild(x); m.scrollTop=m.scrollHeight; },d); }
-function mPhoto(cls,d){ setTimeout(()=>{ const m=document.getElementById('mm'); if(m.querySelector('.dp-mgr-empty')) m.innerHTML=''; const p=document.createElement('div'); p.className='dp-photo dp-photo-mgr '+cls; p.innerHTML='<span>17:04</span>'; m.appendChild(p); m.scrollTop=m.scrollHeight; },d); }
+function bAdd(t,type,d){ setTimeout(()=>{ const m=document.getElementById('bm'); const x=document.createElement('div'); x.className='dp-m '+(type==='out'?'dp-out':'dp-in'); x.innerHTML=t+'<div class="dp-t">17:02'+(type==='out'?' ✓✓':'')+'</div>'; m.appendChild(x); },d); }
+function bPhoto(cls,d){ setTimeout(()=>{ const m=document.getElementById('bm'); const p=document.createElement('div'); p.className='dp-photo '+cls; p.innerHTML='<span>17:02 ✓✓</span>'; m.appendChild(p); },d); }
+function mAdd(t,d){ setTimeout(()=>{ const m=document.getElementById('mm'); if(m.querySelector('.dp-mgr-empty')) m.innerHTML=''; const x=document.createElement('div'); x.className='dp-m dp-in'; x.style.maxWidth='95%'; x.innerHTML=t+'<div class="dp-t">17:04</div>'; m.appendChild(x); },d); }
+function mPhoto(cls,d){ setTimeout(()=>{ const m=document.getElementById('mm'); if(m.querySelector('.dp-mgr-empty')) m.innerHTML=''; const p=document.createElement('div'); p.className='dp-photo dp-photo-mgr '+cls; p.innerHTML='<span>17:04</span>'; m.appendChild(p); },d); }
 
 function reset(){ document.getElementById('bm').innerHTML=''; document.getElementById('mm').innerHTML='<div class="dp-mgr-empty">Notifications land here the moment Joe confirms an order</div>'; }
 
